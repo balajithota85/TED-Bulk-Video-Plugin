@@ -1,0 +1,11 @@
+Helps you get all the video's from your current ted talks page.
+
+Supports url's having the following formats:
+
+a) http://www.ted.com
+b) http://www.ted.com/talks.*
+
+Note: It takes some time to get all the talk video links. So, please be patient.
+
+Usage:
+Once the video links are display you can click on them for download or copy those links to a Download Manager for bulk download. This bulk download feature will be available in this extension in future.
