@@ -21,10 +21,9 @@ var tedRegex = /http:\/\/www.ted.com\/.*/,
 	show = false;
 
 function checkTEDUrl( id, info, tab ) {
-	alert("hi");
-	if ( tab.url.match( tedRegex )  && show === false) {
-	chrome.pageAction.show( id );
-	show = true;
+	if ( tab.url.match( tedRegex )  && show === false ) {
+		chrome.pageAction.show( id );
+		show = true;
 	}
 };
 
