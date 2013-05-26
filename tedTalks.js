@@ -42,7 +42,7 @@
 	    			if(resp.match(highQualityRegex) !== null) {
 			    		downloadLinks[i] = resp.replace(highQualityRegex, "$1").replace(/\\/g,"");
 			    	}else if(resp.match(standardQualityRegex) !== null) {
-			    		downloadLinks[i] = resp.replace(standardQualityRegex, "$1").replace(/\\/g,"");;
+			    		downloadLinks[i] = resp.replace(standardQualityRegex, "$1").replace(/\\/g,"");
 			    	}else{
 			    		/*do nothing*/
 			    		/*TODO*/

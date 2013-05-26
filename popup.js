@@ -34,11 +34,17 @@ chrome.runtime.onMessage.addListener(
 					if(talks[i] !== undefined && talks[i] !== null) {
 						var talkRow = document.createElement('tr'),
 						talkColumn = document.createElement('td'),
-						link = document.createElement('a');
+						link = document.createElement('a'),
+						talkNameStart = talks[i].lastIndexOf("/"),
+						talkNameEnd = talks[i].lastIndexOf("?");
 
 						link.href = talks[i];
 						link.innerText = talks[i];
-						link.download = talks[i].replace(/.*\/(.*)\?.*/, "$1");; // Filename
+
+						if ( talkNameStart !== -1 && talkNameEnd !== -1 ) {
+							link.download = talks[i].substring( talkNameStart + 1, talkNameEnd ); // Filename	
+						}
+						
 						talkColumn.appendChild(link);
 						talkRow.appendChild(talkColumn);
 			    		tedTalksTable.appendChild(talkRow);
