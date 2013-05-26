@@ -26,17 +26,17 @@ chrome.runtime.onMessage.addListener(
 			tedTalksTable = document.getElementById('tedTalks'),
 			loadingDiv = document.getElementById('loading');
 
-		if(request !== undefined && request !== null && request.tedDownloadLinks !== undefined && request.tedDownloadLinks !== null){
+		if ( request !== undefined && request !== null && request.tedDownloadLinks !== undefined && request.tedDownloadLinks !== null ){
 			talks = request.tedDownloadLinks;
-			if(talks.length > 0) {
+			if ( talks.length > 0 ) {
 				noOfTalks = talks.length;
-				for(var i=0; i<noOfTalks; i++){
-					if(talks[i] !== undefined && talks[i] !== null) {
+				for ( var i=0; i<noOfTalks; i++ ) {
+					if ( talks[i] !== undefined && talks[i] !== null ) {
 						var talkRow = document.createElement('tr'),
-						talkColumn = document.createElement('td'),
-						link = document.createElement('a'),
-						talkNameStart = talks[i].lastIndexOf("/"),
-						talkNameEnd = talks[i].lastIndexOf("?");
+							talkColumn = document.createElement('td'),
+							link = document.createElement('a'),
+							talkNameStart = talks[i].lastIndexOf("/"),
+							talkNameEnd = talks[i].lastIndexOf("?");
 
 						link.href = talks[i];
 						link.innerText = talks[i];
@@ -52,7 +52,7 @@ chrome.runtime.onMessage.addListener(
 					}
 				}
 				loadingDiv.innerText = "Fetching complete.";
-			}else{
+			} else {
 				loadingDiv.innerText = "No video's.";
 			}
 		}
@@ -64,10 +64,10 @@ function download(link) {
 }
 
 chrome.windows.getCurrent(
-	function (currentWindow) {
+	function ( currentWindow ) {
 		chrome.tabs.query(
 			{active: true, windowId: currentWindow.id},
-          	function(activeTabs) {
+          	function ( activeTabs ) {
 					chrome.tabs.executeScript(
 					activeTabs[0].id, {file: 'tedTalks.js', allFrames: true}
 				);
