@@ -1,5 +1,5 @@
 /* ==========================================================
- * manifest.json v1.0
+ * popup.js v1.0
  * https://github.com/balajithota85/TED-Bulk-Video-Plugin
  * ==========================================================
  * Copyright 2013 balaji thota.
@@ -17,24 +17,15 @@
  * limitations under the License.
  * ========================================================== */
 
-{
-  "name": "TED Talks Bulk Video Downloader",
-  "description": "1.0",
-  "version": "1.0",
-  "manifest_version": 2,
-  "icons": { 
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "64": "icon64.png",
-    "128": "icon128.png"
-  },
-  "page_action": {
-    "default_popup": "popup.html",
-    "default_title": "TedVideoBulk",
-    "default_icon": "icon16.png"
-  },
-  "background": { "scripts": ["background.js"] },
-  "permissions": [
-    "tabs", "http://www.ted.com/*"
-  ]
-}
+var tedRegex = /http:\/\/www.ted.com\/.*/,
+	show = false;
+
+function checkTEDUrl( id, info, tab ) {
+	alert("hi");
+	if ( tab.url.match( tedRegex )  && show === false) {
+	chrome.pageAction.show( id );
+	show = true;
+	}
+};
+
+chrome.tabs.onUpdated.addListener(checkTEDUrl);

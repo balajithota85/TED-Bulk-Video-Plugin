@@ -17,8 +17,6 @@
  * limitations under the License.
  * ========================================================== */
 
-var tedMainURL = "http://www.ted.com";
-
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse){
 		var talks = undefined,
@@ -51,6 +49,7 @@ chrome.runtime.onMessage.addListener(
 			    		/*download(link);*/
 					}
 				}
+
 				loadingDiv.innerText = "Fetching complete.";
 			} else {
 				loadingDiv.innerText = "No video's.";

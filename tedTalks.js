@@ -27,28 +27,30 @@
 		tedMainURL = "http://www.ted.com/",
 		tedTalksRegex = /http:\/\/www.ted.com\/talks.*/,
 		count = 0,
-		htmlStreamsLength = 14;
+		htmlStreamsLength = 14,
+		standardLength = 18,
+		highLength = 14;
 
 	function getDownloadLink( talk, i ) {
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", talk, true);
+		xhr.open( "GET", talk, true );
 		xhr.onreadystatechange = function() {
 			if ( xhr.readyState == 4 ) {
 				var resp = xhr.responseText;
-				var start = resp.indexOf('htmlStreams');
+				var start = resp.indexOf( 'htmlStreams' );
 	    		if ( start !== -1 ) {
-	    			var end = resp.indexOf(']', start);
-	    			resp = resp.substring(start + htmlStreamsLength ,end);
+	    			var end = resp.indexOf( ']', start );
+	    			resp = resp.substring( start + htmlStreamsLength, end );
 
-	    			var highQualityStart = resp.indexOf('high","file":"'),
+	    			var highQualityStart = resp.indexOf( 'high","file":"' ),
 	    				standardQualityStart = resp.indexOf( 'standard","file":"' );
 	    				
 	    			if ( highQualityStart !== -1 ) {
-	    				var highQualityEnd = resp.indexOf( '"', highQualityStart + 14 );
-			    		downloadLinks[i] = resp.substring( highQualityStart + 14, highQualityEnd ).replace(/\\/g,"");;
-			    	} else if ( resp.match(standardQualityRegex) !== null ) {
-			    		var standardQualityEnd = resp.indexOf( '"', standardQualityStart + 18 );
-			    		downloadLinks[i] = resp.substring( standardQualityStart + 18, standardQualityEnd ).replace(/\\/g,"");;
+	    				var highQualityEnd = resp.indexOf( '"', highQualityStart + highLength );
+			    		downloadLinks[i] = resp.substring( highQualityStart + highLength, highQualityEnd ).replace( /\\/g, "" );;
+			    	} else if ( resp.match( standardQualityRegex ) !== null ) {
+			    		var standardQualityEnd = resp.indexOf( '"', standardQualityStart + standardLength );
+			    		downloadLinks[i] = resp.substring( standardQualityStart + standardLength, standardQualityEnd ).replace( /\\/g, "" );;
 			    	} else{
 			    		/*do nothing*/
 			    		/*TODO*/
@@ -59,7 +61,7 @@
 
 	    		count = count-1;
 		    	if( count === 0) {
-		    		chrome.runtime.sendMessage({tedDownloadLinks: downloadLinks});	
+		    		chrome.runtime.sendMessage( { tedDownloadLinks: downloadLinks } );	
 		    	}
 		  	}
 		}
