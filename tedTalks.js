@@ -34,7 +34,7 @@
 		standardLength = 18,
 		highLength = 14;
 
-	function getDownloadLink( talk, i, fetch) {
+	function getDownloadLink( talk, i) {
 		var xhr = new XMLHttpRequest();
 		xhr.open( "GET", talk, true );
 		xhr.onreadystatechange = function() {
@@ -109,7 +109,8 @@
 			}
 		}	
 	} else {
-		chrome.runtime.sendMessage( { tedDownloadLinks: [url] } );
+		count = 1;
+		getDownloadLink ( url, 0 );
 	}
 	
 	
