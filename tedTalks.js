@@ -107,6 +107,8 @@
 					talks[i] = undefined;
 				}
 			}
+		} else {
+			chrome.runtime.sendMessage( { tedDownloadLinks: null } );
 		}	
 	} else {
 		count = 1;

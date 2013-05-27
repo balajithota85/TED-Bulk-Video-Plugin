@@ -54,6 +54,8 @@ chrome.runtime.onMessage.addListener(
 			} else {
 				loadingDiv.innerText = "No video's.";
 			}
+		} else {
+			loadingDiv.innerText = "No video's.";
 		}
 	}
 );
