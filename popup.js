@@ -65,6 +65,7 @@ function download(link) {
 }
 
 chrome.windows.getCurrent(
+	/*here need to check if the current url is other than ted url and not execute the following script*/
 	function ( currentWindow ) {
 		chrome.tabs.query(
 			{active: true, windowId: currentWindow.id},

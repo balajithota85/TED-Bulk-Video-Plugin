@@ -95,11 +95,11 @@
 		In future might get more link regex's*/
 	}
 	
-	if ( fetch ) {
-		if(talkLinks !== undefined && talkLinks !== null && talkLinks.length > 0) {
+	if ( fetch === true ) {
+		if ( talkLinks !== undefined && talkLinks !== null && talkLinks.length > 0 ) {
 			noOfTalkLinks = talkLinks.length;
 			count = noOfTalkLinks;
-			for(var i=0; i<noOfTalkLinks; i++){
+			for (var i=0; i<noOfTalkLinks; i++) {
 				if(talkLinks[i] !== undefined && talkLinks[i] !== null) {
 					talks[i] = talkLinks[i].getAttribute("href");
 					getDownloadLink(talks[i], i);
@@ -108,7 +108,7 @@
 				}
 			}
 		} else {
-			chrome.runtime.sendMessage( { tedDownloadLinks: null } );
+			chrome.runtime.sendMessage( { tedDownloadLinks: [] } );
 		}	
 	} else {
 		count = 1;
