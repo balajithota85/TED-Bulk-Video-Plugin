@@ -17,25 +17,28 @@
  * limitations under the License.
  * ========================================================== */
 
-(function(window, undefined){
+(function (window, undefined) {
 	var temp = undefined,
-		talkLinks = undefined, 
+      	talkLinks = undefined, 
 		talks = [],
 		downloadLinks = [],
 		noOfTalkLinks = 0,
 		document = window.document,
+		url = document.URL,
 		tedMainURL = "http://www.ted.com/",
+		tedUserTalksRegex = /http:\/\/www.ted.com\/talks\/.*/,
 		tedTalksRegex = /http:\/\/www.ted.com\/talks.*/,
 		count = 0,
+		fetch = true,
 		htmlStreamsLength = 14,
 		standardLength = 18,
 		highLength = 14;
 
-	function getDownloadLink( talk, i ) {
+	function getDownloadLink( talk, i, fetch) {
 		var xhr = new XMLHttpRequest();
 		xhr.open( "GET", talk, true );
 		xhr.onreadystatechange = function() {
-			if ( xhr.readyState == 4 ) {
+			if ( xhr.readyState === 4 ) {
 				var resp = xhr.responseText;
 				var start = resp.indexOf( 'htmlStreams' );
 	    		if ( start !== -1 ) {
@@ -69,9 +72,11 @@
 	}
 	
 	/*need to write logic for various pages*/
-	if(document.URL === tedMainURL) {
+	if (url === tedMainURL) {
 		talkLinks = document.getElementById('theAppContainer').getElementsByClassName('fractal-link');
-	}else if(document.URL.match(tedTalksRegex) !== null && document.URL.match(tedTalksRegex).length === 1){
+	} else if ( url.match(tedUserTalksRegex) !== null && url.match(tedUserTalksRegex).length === 1 ) {
+		fetch = false;
+	} else if (url.match(tedTalksRegex) !== null && url.match(tedTalksRegex).length === 1){
 		temp = document.getElementById('content').getElementsByClassName('col');
 		if(temp !== undefined && temp !== null && temp.length > 0) {
 			var tempLength = temp.length;
@@ -85,23 +90,27 @@
 				}
 			}
 		}
-	}else{
+	} else{
 		/*do nothing
 		In future might get more link regex's*/
 	}
-		
-	if(talkLinks !== undefined && talkLinks !== null && talkLinks.length > 0) {
-		noOfTalkLinks = talkLinks.length;
-		count = noOfTalkLinks;
-		for(var i=0; i<noOfTalkLinks; i++){
-			if(talkLinks[i] !== undefined && talkLinks[i] !== null) {
-				talks[i] = talkLinks[i].getAttribute("href");
-				getDownloadLink(talks[i], i);
-			} else {
-				talks[i] = undefined;
+	
+	if ( fetch ) {
+		if(talkLinks !== undefined && talkLinks !== null && talkLinks.length > 0) {
+			noOfTalkLinks = talkLinks.length;
+			count = noOfTalkLinks;
+			for(var i=0; i<noOfTalkLinks; i++){
+				if(talkLinks[i] !== undefined && talkLinks[i] !== null) {
+					talks[i] = talkLinks[i].getAttribute("href");
+					getDownloadLink(talks[i], i);
+				} else {
+					talks[i] = undefined;
+				}
 			}
-		}
-		chrome.runtime.sendMessage({tedTalks: talks});
+		}	
+	} else {
+		chrome.runtime.sendMessage( { tedDownloadLinks: [url] } );
 	}
+	
 	
 })(window);

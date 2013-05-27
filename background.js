@@ -17,13 +17,11 @@
  * limitations under the License.
  * ========================================================== */
 
-var tedRegex = /http:\/\/www.ted.com\/.*/,
-	show = false;
+var tedRegex = /http:\/\/www.ted.com\/.*/;
 
 function checkTEDUrl( id, info, tab ) {
-	if ( tab.url.match( tedRegex )  && show === false ) {
+	if ( tab.url.match( tedRegex ) ) {
 		chrome.pageAction.show( id );
-		show = true;
 	}
 };
 
