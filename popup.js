@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener(
 						link.href = talks[i];
 						link.innerText = talks[i];
 
-						if ( talkNameStart !== -1 && talkNameEnd !== -1 ) {
+						if ( talkNameStart !== -1 && talkNameEnd !== -1 ) { /*adding a new condition*/
 							link.download = talks[i].substring( talkNameStart + 1, talkNameEnd ); // Filename	
 						}
 						
